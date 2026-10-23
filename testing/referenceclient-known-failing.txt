@@ -1,1 +1,20 @@
-# There are no known failures in the reference client.
+# The connect-go client compares the response content type as a string, so it
+# rejects any parameters. Connect unary only allows an exact "charset=utf-8".
+Connect JSON Content-Type Parameter Responses/**/server-stream/charset-utf-8
+Connect JSON Content-Type Parameter Responses/**/charset-utf-8-uppercase
+Connect JSON Content-Type Parameter Responses/**/charset-utf-8-quoted
+Connect JSON Content-Type Parameter Responses/**/charset-utf-8-with-unknown-parameter
+Connect JSON Content-Type Parameter Responses/**/unknown-parameter
+Connect Proto Content-Type Parameter Responses/**/unknown-parameter
+gRPC JSON Content-Type Parameter Responses/**/charset-utf-8
+gRPC JSON Content-Type Parameter Responses/**/charset-utf-8-uppercase
+gRPC JSON Content-Type Parameter Responses/**/charset-utf-8-quoted
+gRPC JSON Content-Type Parameter Responses/**/charset-utf-8-with-unknown-parameter
+gRPC JSON Content-Type Parameter Responses/**/unknown-parameter
+gRPC Proto Content-Type Parameter Responses/**/unknown-parameter
+gRPC-Web JSON Content-Type Parameter Responses/**/charset-utf-8
+gRPC-Web JSON Content-Type Parameter Responses/**/charset-utf-8-uppercase
+gRPC-Web JSON Content-Type Parameter Responses/**/charset-utf-8-quoted
+gRPC-Web JSON Content-Type Parameter Responses/**/charset-utf-8-with-unknown-parameter
+gRPC-Web JSON Content-Type Parameter Responses/**/unknown-parameter
+gRPC-Web Proto Content-Type Parameter Responses/**/unknown-parameter

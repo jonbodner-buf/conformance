@@ -1,0 +1,136 @@
+# gRPC follows the Connect rules: a charset parameter on a JSON content type
+# must be utf-8, and any other parameter must be ignored.
+name: gRPC JSON Content-Type Parameter Requests
+mode: TEST_MODE_SERVER
+relevantProtocols:
+  - PROTOCOL_GRPC
+relevantCompressions:
+  - COMPRESSION_IDENTITY
+relevantCodecs:
+  - CODEC_JSON
+testCases:
+  - request:
+      testName: unary/charset-utf-8
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ "application/grpc+json; charset=utf-8" ]
+          - name: te
+            value: [ "trailers" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
+  - request:
+      testName: unary/charset-utf-8-uppercase
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ "application/grpc+json; charset=UTF-8" ]
+          - name: te
+            value: [ "trailers" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
+  - request:
+      testName: unary/charset-utf-8-quoted
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ 'application/grpc+json; charset="utf-8"' ]
+          - name: te
+            value: [ "trailers" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
+  - request:
+      testName: unary/charset-utf-8-with-unknown-parameter
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ "application/grpc+json; charset=utf-8; foo=bar" ]
+          - name: te
+            value: [ "trailers" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
+  - request:
+      testName: unary/unknown-parameter
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ "application/grpc+json; foo=bar" ]
+          - name: te
+            value: [ "trailers" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
+  - request:
+      testName: unary/unsupported-charset
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ "application/grpc+json; charset=iso-8859-1" ]
+          - name: te
+            value: [ "trailers" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
+    expectedResponse:
+      httpStatusCode: 415
+      error:
+        # unknown, mapped from 415 status code
+        code: CODE_UNKNOWN
