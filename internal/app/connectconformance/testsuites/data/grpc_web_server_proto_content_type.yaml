@@ -1,5 +1,5 @@
-# gRPC-Web follows the Connect rule that unknown content-type parameters must be
-# ignored.
+# gRPC-Web follows the Connect rule that the charset parameter and unknown
+# content-type parameters must be ignored for proto.
 name: gRPC-Web Proto Content-Type Parameter Requests
 mode: TEST_MODE_SERVER
 relevantProtocols:
@@ -22,6 +22,27 @@ testCases:
         headers:
           - name: content-type
             value: [ "application/grpc-web+proto; foo=bar" ]
+        stream:
+          items:
+            - flags: 0
+              payload:
+                binary_message:
+                  "@type": "type.googleapis.com/connectrpc.conformance.v1.UnaryRequest"
+                  responseDefinition:
+                    responseData: "dGVzdCByZXNwb25zZQ=="
+  - request:
+      testName: unary/charset-ignored
+      streamType: STREAM_TYPE_UNARY
+      requestMessages:
+        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
+          responseDefinition:
+            responseData: "dGVzdCByZXNwb25zZQ=="
+      rawRequest:
+        verb: POST
+        uri: /connectrpc.conformance.v1.ConformanceService/Unary
+        headers:
+          - name: content-type
+            value: [ "application/grpc-web+proto; charset=iso-8859-1" ]
         stream:
           items:
             - flags: 0
