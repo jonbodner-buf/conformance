@@ -7,8 +7,6 @@ Connect Proto Content-Type Parameter Requests/**/charset-ignored
 gRPC JSON Content-Type Parameter Requests/**/unknown-parameter
 gRPC JSON Content-Type Parameter Requests/**/charset-utf-8-with-unknown-parameter
 gRPC Proto Content-Type Parameter Requests/**/unknown-parameter
-gRPC Proto Content-Type Parameter Requests/**/charset-ignored
 gRPC-Web JSON Content-Type Parameter Requests/**/unknown-parameter
 gRPC-Web JSON Content-Type Parameter Requests/**/charset-utf-8-with-unknown-parameter
 gRPC-Web Proto Content-Type Parameter Requests/**/unknown-parameter
-gRPC-Web Proto Content-Type Parameter Requests/**/charset-ignored

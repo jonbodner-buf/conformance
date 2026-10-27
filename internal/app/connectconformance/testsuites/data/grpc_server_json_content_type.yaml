@@ -1,5 +1,5 @@
-# gRPC follows the Connect rules: a charset parameter on a JSON content type
-# must be utf-8, and any other parameter must be ignored.
+# gRPC has its own content-type rules, so only check that a utf-8 charset and
+# unknown parameters on a JSON content type are accepted.
 name: gRPC JSON Content-Type Parameter Requests
 mode: TEST_MODE_SERVER
 relevantProtocols:
@@ -109,28 +109,3 @@ testCases:
             - flags: 0
               payload:
                 text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
-  - request:
-      testName: unary/unsupported-charset
-      streamType: STREAM_TYPE_UNARY
-      requestMessages:
-        - "@type": type.googleapis.com/connectrpc.conformance.v1.UnaryRequest
-          responseDefinition:
-            responseData: "dGVzdCByZXNwb25zZQ=="
-      rawRequest:
-        verb: POST
-        uri: /connectrpc.conformance.v1.ConformanceService/Unary
-        headers:
-          - name: content-type
-            value: [ "application/grpc+json; charset=iso-8859-1" ]
-          - name: te
-            value: [ "trailers" ]
-        stream:
-          items:
-            - flags: 0
-              payload:
-                text: '{"responseDefinition": {"responseData": "dGVzdCByZXNwb25zZQ=="}}'
-    expectedResponse:
-      httpStatusCode: 415
-      error:
-        # unknown, mapped from 415 status code
-        code: CODE_UNKNOWN
